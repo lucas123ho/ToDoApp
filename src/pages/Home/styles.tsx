@@ -61,23 +61,16 @@ export const TextEmpty = styled.Text`
 `;
 
 export const Footer = styled.View`
-  position: relative;
+  position: absolute;
+  width: 100%;
   padding: 36px 0;
   align-items: center;
-`;
-
-export const DetailFooter = styled.View`
-  position: absolute;
-  height: 50px;
-  width: 100%;
-  background-color: ${colors.white};
-  bottom: 0px;
-  z-index: -1;
+  bottom: 0;
 `;
 
 export const ButtonAdd = styled.TouchableOpacity`
-  /* background-color: red; */
   align-items: center;
   justify-content: center;
   margin-bottom: -30px;
 `;
+

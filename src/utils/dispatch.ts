@@ -16,3 +16,17 @@ export function addItemAction(payload: Item): ListAction {
     payload
   }
 }
+
+export function toggleCheckItemAction(payload: Item): ListAction {
+  return {
+    type: ListTypes.TOGGLE_FINALIZED_ITEM,
+    payload
+  }
+}
+
+export function removeItemAction(payload: Item): ListAction {
+  return {
+    type: ListTypes.REMOVE_ITEM,
+    payload
+  }
+}

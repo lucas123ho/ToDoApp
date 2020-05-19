@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { useSelector } from 'react-redux';
-import { Image } from "react-native";
+import { useSelector } from "react-redux";
+import { Image, FlatList } from "react-native";
 
 import {
   Container,
@@ -14,18 +14,20 @@ import {
   TitleEmpty,
   TextEmpty,
   Footer,
-  DetailFooter,
-  ButtonAdd
+  ButtonAdd,
 } from "./styles";
 import bgHeader from "@assets/images/bg_header.png";
 import prancheta from "@assets/images/prancheta2.png";
-import button from '@assets/images/button.png';
-import CreateTask from '@components/CreateTask';
+import button from "@assets/images/button.png";
+import CreateTask from "@components/CreateTask";
 import { ApplicationState } from "@root/store";
+import Item from '@components/Item';
 
 export default function Home() {
   const [modalCreateTaskVisible, setModalCreateTaskVisible] = useState(false);
-  const { itens } = useSelector((state: ApplicationState) => state.list);
+  const { itens, finalized } = useSelector(
+    (state: ApplicationState) => state.list
+  );
 
   useEffect(() => {
     console.log(itens);
@@ -47,25 +49,50 @@ export default function Home() {
           />
         </ContainerHeader>
       </Header>
-      <ContentEmpty
-        contentContainerStyle={{
-          alignItems: "center",
-          justifyContent: "center",
-          flex: 1,
-          padding: 45,
-        }}
-      >
-        <Image source={prancheta} />
-        <TitleEmpty>Nenhuma tarefa</TitleEmpty>
-        <TextEmpty>Clique no "+" para adicionar uma nova tarefa</TextEmpty>
-      </ContentEmpty>
+      {itens?.length === 0 ? (
+        <ContentEmpty
+          contentContainerStyle={{
+            alignItems: "center",
+            justifyContent: "center",
+            flex: 1,
+            padding: 45,
+          }}
+        >
+          <Image source={prancheta} />
+          <TitleEmpty>Nenhuma tarefa</TitleEmpty>
+          <TextEmpty>Clique no "+" para adicionar uma nova tarefa</TextEmpty>
+        </ContentEmpty>
+      ) : (
+        <FlatList 
+          data={itens}
+          style={{
+            paddingHorizontal: 22,
+            paddingTop: 22,
+            paddingBottom: 70
+          }}
+          renderItem={({ item, index }) => (
+            <Item 
+              id={item?.id}
+              title={item?.title}
+              date={item?.date}
+              checked={finalized?.indexOf(item?.id) !== -1}
+              style={{
+                marginBottom: index === itens.length-1 ? 150 : 14
+              }}
+            />
+          )}
+        />
+      )}
+
       <Footer>
         <ButtonAdd onPress={() => setModalCreateTaskVisible(true)}>
           <Image source={button} />
         </ButtonAdd>
-        <DetailFooter />
       </Footer>
-      <CreateTask visible={modalCreateTaskVisible} onClose={() => setModalCreateTaskVisible(false)} />
+      <CreateTask
+        visible={modalCreateTaskVisible}
+        onClose={() => setModalCreateTaskVisible(false)}
+      />
     </Container>
   );
 }

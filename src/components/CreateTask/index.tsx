@@ -28,6 +28,7 @@ export default function CreateTask({ visible, onClose }: CreateTaskType) {
 
   function handleCreateNewTask() {
     dispatch(addItemAction({
+      id: 0,
       title
     }));
     onClose();
