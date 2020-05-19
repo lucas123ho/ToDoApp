@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import { Image, FlatList } from "react-native";
 
@@ -28,10 +28,6 @@ export default function Home() {
   const { itens, finalized } = useSelector(
     (state: ApplicationState) => state.list
   );
-
-  useEffect(() => {
-    console.log(itens);
-  }, []);
 
   return (
     <Container>
@@ -65,6 +61,7 @@ export default function Home() {
       ) : (
         <FlatList 
           data={itens}
+          keyExtractor={({ id }) => String(id)}
           style={{
             paddingHorizontal: 22,
             paddingTop: 22,
