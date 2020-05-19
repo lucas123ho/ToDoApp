@@ -15,7 +15,6 @@ const INITIAL_STATE: ListState = {
 };
 
 const addItem = (state: ListState, action: ListAction): ListState => {
-  moment.locale("pt-br");
   return {
     ...state,
     itens: [
