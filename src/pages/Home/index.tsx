@@ -21,7 +21,7 @@ import prancheta from "@assets/images/prancheta2.png";
 import button from "@assets/images/button.png";
 import CreateTask from "@components/CreateTask";
 import { ApplicationState } from "@root/store";
-import Item from '@components/Item';
+import Item from "@components/Item";
 
 export default function Home() {
   const [modalCreateTaskVisible, setModalCreateTaskVisible] = useState(false);
@@ -35,7 +35,11 @@ export default function Home() {
         <ContainerHeader>
           <ContainerText>
             <Name>Olá Julius!</Name>
-            <Count>Você não tem nenhuma tarefa hoje</Count>
+            <Count>
+              {itens?.length === 0
+                ? "Você não tem nenhuma tarefa"
+                : `Você tem ${itens?.length} tarefas`}
+            </Count>
           </ContainerText>
           <Avatar
             source={{
@@ -59,22 +63,22 @@ export default function Home() {
           <TextEmpty>Clique no "+" para adicionar uma nova tarefa</TextEmpty>
         </ContentEmpty>
       ) : (
-        <FlatList 
+        <FlatList
           data={itens}
           keyExtractor={({ id }) => String(id)}
           style={{
             paddingHorizontal: 22,
             paddingTop: 22,
-            paddingBottom: 70
+            paddingBottom: 70,
           }}
           renderItem={({ item, index }) => (
-            <Item 
+            <Item
               id={item?.id}
               title={item?.title}
               date={item?.date}
               checked={finalized?.indexOf(item?.id) !== -1}
               style={{
-                marginBottom: index === itens.length-1 ? 150 : 14
+                marginBottom: index === itens.length - 1 ? 150 : 14,
               }}
             />
           )}
